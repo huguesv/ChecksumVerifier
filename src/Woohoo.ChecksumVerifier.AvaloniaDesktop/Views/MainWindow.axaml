@@ -1,0 +1,158 @@
+<Window
+    x:Class="Woohoo.ChecksumVerifier.AvaloniaDesktop.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Woohoo.ChecksumVerifier.AvaloniaDesktop.ViewModels"
+    xmlns:vmd="using:Woohoo.ChecksumVerifier.AvaloniaDesktop.ViewModels.DesignTime"
+    Title="Checksum Verifier"
+    Width="600"
+    Height="600"
+    d:DesignHeight="600"
+    d:DesignWidth="600"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vmd:DesignMainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+            <Label
+                Grid.Column="0"
+                Margin="8"
+                VerticalAlignment="Center"
+                Content="Checksum File" />
+            <TextBox
+                Grid.Column="1"
+                Margin="8"
+                VerticalAlignment="Center"
+                Text="{Binding ChecksumFilePath}" />
+            <Button
+                Grid.Column="2"
+                Margin="8"
+                VerticalAlignment="Center"
+                AutomationProperties.Name="Browse"
+                Command="{Binding BrowseChecksumFileCommand}"
+                Content="..." />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <Label Margin="8" Content="Scan Folders" />
+            <ListBox
+                Margin="8"
+                ItemsSource="{Binding ScanFolders}"
+                SelectedItem="{Binding SelectedScanFolder}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="vm:ScanFolderViewModel">
+                        <TextBlock Text="{Binding FolderPath}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <WrapPanel Orientation="Horizontal">
+                <Button
+                    Margin="8"
+                    Command="{Binding AddScanFolderCommand}"
+                    Content="Add..." />
+                <Button
+                    Margin="8"
+                    Command="{Binding RemoveScanFolderCommand}"
+                    Content="Remove" />
+            </WrapPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,*">
+            <Button
+                Grid.Column="0"
+                Margin="8"
+                Command="{Binding ScanCommand}"
+                Content="Scan" />
+            <Button
+                Grid.Column="1"
+                Margin="8"
+                Command="{Binding CancelScanCommand}"
+                Content="Cancel"
+                IsVisible="{Binding IsScanning}" />
+            <ProgressBar
+                Grid.Column="2"
+                Margin="8"
+                IsVisible="{Binding IsScanning}"
+                Maximum="100"
+                Minimum="0"
+                Value="{Binding ProgressPercentage}" />
+        </Grid>
+
+        <DataGrid
+            Grid.Row="3"
+            Margin="8"
+            Background="Transparent"
+            CanUserResizeColumns="True"
+            IsReadOnly="True"
+            ItemsSource="{Binding Results}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding Name}"
+                    FontSize="12"
+                    Header="Name"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding Expected}"
+                    FontSize="12"
+                    Header="Expected"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding Actual}"
+                    FontSize="12"
+                    Header="Actual"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding Status}"
+                    FontSize="12"
+                    Header="Status"
+                    IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TabControl Grid.Row="4">
+            <TabItem Header="Match">
+                <TextBox
+                    Height="150"
+                    Margin="0,8"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    Text="{Binding OutputMatches}"
+                    TextWrapping="Wrap" />
+            </TabItem>
+            <TabItem Header="Mismatch">
+                <TextBox
+                    Height="150"
+                    Margin="0,8"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    Text="{Binding OutputMismatches}"
+                    TextWrapping="Wrap" />
+            </TabItem>
+            <TabItem Header="Missing">
+                <TextBox
+                    Height="150"
+                    Margin="0,8"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    Text="{Binding OutputMissings}"
+                    TextWrapping="Wrap" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</Window>
