@@ -35,7 +35,7 @@
     <PackageVersion Include="Squid-Box.SevenZipSharp" Version="1.6.2.24" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="Woohoo.Platform.Windows" Version="0.1.0" />
-    <PackageVersion Include="Woohoo.Security.Cryptography" Version="0.1.0" />
+    <PackageVersion Include="Woohoo.Security.Cryptography" Version="0.2.0" />
     <PackageVersion Include="WinUIEx" Version="2.5.1" />
     <PackageVersion Include="WPF-UI" Version="1.2.7" />
   </ItemGroup>
