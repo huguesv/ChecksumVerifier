@@ -4,17 +4,9 @@
 namespace Woohoo.ChecksumVerifier.AvaloniaDesktop.ViewModels;
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 public partial class ScanFolderViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string folderPath = string.Empty;
-
-    [RelayCommand]
-    private void Remove()
-    {
-        // TODO: bind to a command on parent view model instead
-        // https://github.com/AvaloniaUI/Avalonia/discussions/12719
-    }
+    public partial string FolderPath { get; set; } = string.Empty;
 }

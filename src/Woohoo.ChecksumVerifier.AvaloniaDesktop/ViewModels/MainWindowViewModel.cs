@@ -23,38 +23,6 @@ public partial class MainWindowViewModel : ObservableObject
 
     private ChecksumFile? checksumFile;
 
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ScanCommand))]
-    private string checksumFilePath = string.Empty;
-
-    [ObservableProperty]
-    private string outputMatches = string.Empty;
-
-    [ObservableProperty]
-    private string outputMismatches = string.Empty;
-
-    [ObservableProperty]
-    private string outputMissings = string.Empty;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(BrowseChecksumFileCommand))]
-    [NotifyCanExecuteChangedFor(nameof(RemoveScanFolderCommand))]
-    [NotifyCanExecuteChangedFor(nameof(AddScanFolderCommand))]
-    [NotifyCanExecuteChangedFor(nameof(ScanCommand))]
-    [NotifyCanExecuteChangedFor(nameof(CancelScanCommand))]
-    private bool isScanning = false;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(CancelScanCommand))]
-    private bool isCancelling = false;
-
-    [ObservableProperty]
-    private int progressPercentage;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(RemoveScanFolderCommand))]
-    private object? selectedScanFolder = null;
-
     public MainWindowViewModel(IStorageService storageService)
     {
         this.storageService = storageService;
@@ -67,6 +35,38 @@ public partial class MainWindowViewModel : ObservableObject
         this.worker.WorkerSupportsCancellation = true;
         this.storageService = storageService;
     }
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ScanCommand))]
+    public partial string ChecksumFilePath { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string OutputMatches { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string OutputMismatches { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string OutputMissings { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(BrowseChecksumFileCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveScanFolderCommand))]
+    [NotifyCanExecuteChangedFor(nameof(AddScanFolderCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ScanCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CancelScanCommand))]
+    public partial bool IsScanning { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(CancelScanCommand))]
+    public partial bool IsCancelling { get; set; } = false;
+
+    [ObservableProperty]
+    public partial int ProgressPercentage { get; set; }
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(RemoveScanFolderCommand))]
+    public partial object? SelectedScanFolder { get; set; } = null;
 
     public ObservableCollection<HashResultViewModel> Results { get; set; } = [];
 
@@ -185,8 +185,6 @@ public partial class MainWindowViewModel : ObservableObject
 
         this.IsScanning = true;
 
-        this.NotifyVerifyingChanged();
-
         this.worker.RunWorkerAsync(new Tuple<ChecksumFile, string[]>(this.checksumFile, scanFolderPaths));
     }
 
@@ -221,12 +219,6 @@ public partial class MainWindowViewModel : ObservableObject
     private bool CanCancelScan()
     {
         return this.IsScanning && !this.IsCancelling;
-    }
-
-    private void NotifyVerifyingChanged()
-    {
-        // TODO: should not be needed anymore
-        //this.VerifyCommand.NotifyCanExecuteChanged();
     }
 
     private void Worker_DoWork(object? sender, DoWorkEventArgs e)
@@ -322,18 +314,13 @@ public partial class MainWindowViewModel : ObservableObject
         this.IsScanning = false;
         this.IsCancelling = false;
 
-        //        if (e.Cancelled)
+        foreach (var hashResultViewModel in this.Results)
         {
-            foreach (var hashResultViewModel in this.Results)
+            if (hashResultViewModel.Actual.Length == 0)
             {
-                if (hashResultViewModel.Actual.Length == 0)
-                {
-                    hashResultViewModel.Actual = Localized.ResultActualNA;
-                    hashResultViewModel.Status = Localized.ResultCancel;
-                }
+                hashResultViewModel.Actual = Localized.ResultActualNA;
+                hashResultViewModel.Status = Localized.ResultCancel;
             }
         }
-
-        this.NotifyVerifyingChanged();
     }
 }

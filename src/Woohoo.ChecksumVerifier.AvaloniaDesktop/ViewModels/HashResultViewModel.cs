@@ -8,17 +8,17 @@ using CommunityToolkit.Mvvm.ComponentModel;
 public partial class HashResultViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string name = string.Empty;
+    public partial string Name { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string algorithm = string.Empty;
+    public partial string Algorithm { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string expected = string.Empty;
+    public partial string Expected { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string actual = string.Empty;
+    public partial string Actual { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string status = string.Empty;
+    public partial string Status { get; set; } = string.Empty;
 }
