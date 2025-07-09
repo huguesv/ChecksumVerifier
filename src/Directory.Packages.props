@@ -21,7 +21,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="Devolutions.AvaloniaTheme.MacOS" Version="2025.6.27" />
     <PackageVersion Include="FluentAvaloniaUI" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.183" />
