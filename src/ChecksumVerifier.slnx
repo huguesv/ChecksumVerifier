@@ -4,6 +4,8 @@
     <File Path="../README.md" />
     <File Path="Common/Common.AssemblyInfo.cs" />
     <File Path="Common/stylecop.json" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="Woohoo.ChecksumVerifier.AvaloniaDesktop/Woohoo.ChecksumVerifier.AvaloniaDesktop.csproj" />
   <Project Path="Woohoo.ChecksumVerifier.Core/Woohoo.ChecksumVerifier.Core.csproj" Id="10f91dd9-43b3-4d09-9e91-9098fef18583" />
