@@ -34,13 +34,13 @@
                 Grid.Column="1"
                 Margin="8"
                 VerticalAlignment="Center"
-                Text="{Binding ChecksumFilePath}" />
+                Text="{Binding ChecksumFilePath, Mode=TwoWay}" />
             <Button
                 Grid.Column="2"
                 Margin="8"
                 VerticalAlignment="Center"
                 AutomationProperties.Name="Browse"
-                Command="{Binding BrowseChecksumFileCommand}"
+                Command="{Binding BrowseChecksumFileCommand, Mode=OneWay}"
                 Content="..." />
         </Grid>
 
@@ -48,22 +48,22 @@
             <Label Margin="8" Content="Scan Folders" />
             <ListBox
                 Margin="8"
-                ItemsSource="{Binding ScanFolders}"
-                SelectedItem="{Binding SelectedScanFolder}">
+                ItemsSource="{Binding ScanFolders, Mode=OneWay}"
+                SelectedItem="{Binding SelectedScanFolder, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="vm:ScanFolderViewModel">
-                        <TextBlock Text="{Binding FolderPath}" />
+                        <TextBlock Text="{Binding FolderPath, Mode=OneWay}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <WrapPanel Orientation="Horizontal">
                 <Button
                     Margin="8"
-                    Command="{Binding AddScanFolderCommand}"
+                    Command="{Binding AddScanFolderCommand, Mode=OneWay}"
                     Content="Add..." />
                 <Button
                     Margin="8"
-                    Command="{Binding RemoveScanFolderCommand}"
+                    Command="{Binding RemoveScanFolderCommand, Mode=OneWay}"
                     Content="Remove" />
             </WrapPanel>
         </StackPanel>
@@ -72,21 +72,21 @@
             <Button
                 Grid.Column="0"
                 Margin="8"
-                Command="{Binding ScanCommand}"
+                Command="{Binding ScanCommand, Mode=OneWay}"
                 Content="Scan" />
             <Button
                 Grid.Column="1"
                 Margin="8"
-                Command="{Binding CancelScanCommand}"
+                Command="{Binding CancelScanCommand, Mode=OneWay}"
                 Content="Cancel"
-                IsVisible="{Binding IsScanning}" />
+                IsVisible="{Binding IsScanning, Mode=OneWay}" />
             <ProgressBar
                 Grid.Column="2"
                 Margin="8"
-                IsVisible="{Binding IsScanning}"
+                IsVisible="{Binding IsScanning, Mode=OneWay}"
                 Maximum="100"
                 Minimum="0"
-                Value="{Binding ProgressPercentage}" />
+                Value="{Binding ProgressPercentage, Mode=OneWay}" />
         </Grid>
 
         <DataGrid
@@ -95,29 +95,29 @@
             Background="Transparent"
             CanUserResizeColumns="True"
             IsReadOnly="True"
-            ItemsSource="{Binding Results}">
+            ItemsSource="{Binding Results, Mode=OneWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding Name}"
+                    Binding="{Binding Name, Mode=OneWay}"
                     FontSize="12"
                     Header="Name"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding Expected}"
+                    Binding="{Binding Expected, Mode=OneWay}"
                     FontSize="12"
                     Header="Expected"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding Actual}"
+                    Binding="{Binding Actual, Mode=OneWay}"
                     FontSize="12"
                     Header="Actual"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding Status}"
+                    Binding="{Binding Status, Mode=OneWay}"
                     FontSize="12"
                     Header="Status"
                     IsReadOnly="True" />
@@ -131,7 +131,7 @@
                     Margin="0,8"
                     AcceptsReturn="True"
                     IsReadOnly="True"
-                    Text="{Binding OutputMatches}"
+                    Text="{Binding OutputMatches, Mode=OneWay}"
                     TextWrapping="Wrap" />
             </TabItem>
             <TabItem Header="Mismatch">
@@ -140,7 +140,7 @@
                     Margin="0,8"
                     AcceptsReturn="True"
                     IsReadOnly="True"
-                    Text="{Binding OutputMismatches}"
+                    Text="{Binding OutputMismatches, Mode=OneWay}"
                     TextWrapping="Wrap" />
             </TabItem>
             <TabItem Header="Missing">
@@ -149,7 +149,7 @@
                     Margin="0,8"
                     AcceptsReturn="True"
                     IsReadOnly="True"
-                    Text="{Binding OutputMissings}"
+                    Text="{Binding OutputMissings, Mode=OneWay}"
                     TextWrapping="Wrap" />
             </TabItem>
         </TabControl>

@@ -17,11 +17,10 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" />
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
     <PackageReference Include="Avalonia.Fonts.Inter" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="Devolutions.AvaloniaTheme.MacOS" />
     <PackageReference Include="FluentAvaloniaUI" />
@@ -31,6 +30,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Woohoo.Security.Cryptography" />
+    <!-- Explicit reference to override vulnerable transitive dependency -->
+    <PackageReference Include="Tmds.DBus.Protocol" />
   </ItemGroup>
 
 

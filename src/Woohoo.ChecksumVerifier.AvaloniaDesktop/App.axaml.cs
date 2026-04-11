@@ -6,11 +6,9 @@ namespace Woohoo.ChecksumVerifier.AvaloniaDesktop;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Themes.Fluent;
-using Avalonia.VisualTree;
 using Microsoft.Extensions.DependencyInjection;
 using Woohoo.ChecksumVerifier.AvaloniaDesktop.Services;
 using Woohoo.ChecksumVerifier.AvaloniaDesktop.ViewModels;
@@ -24,13 +22,12 @@ public partial class App : Application
     {
         if (app.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            return desktop.MainWindow;
+            return TopLevel.GetTopLevel(desktop.MainWindow);
         }
 
         if (app.ApplicationLifetime is ISingleViewApplicationLifetime viewApp)
         {
-            var visualRoot = viewApp.MainView?.GetVisualRoot();
-            return visualRoot as TopLevel;
+            return TopLevel.GetTopLevel(viewApp.MainView);
         }
 
         return null;
@@ -51,10 +48,6 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // If you use CommunityToolkit, line below is needed to remove Avalonia data validation.
-        // Without this line you will get duplicate validations from both Avalonia and CT
-        BindingPlugins.DataValidators.RemoveAt(0);
-
         // Register all the services needed for the application to run
         var collection = new ServiceCollection();
         AddServices(collection);
@@ -66,9 +59,6 @@ public partial class App : Application
 
         if (this.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Line below is needed to remove Avalonia data validation.
-            // Without this line you will get duplicate validations from both Avalonia and CT
-            BindingPlugins.DataValidators.RemoveAt(0);
             desktop.MainWindow = new MainWindow
             {
                 DataContext = vm,
