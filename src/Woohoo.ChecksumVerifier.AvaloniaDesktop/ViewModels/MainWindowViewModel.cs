@@ -319,7 +319,7 @@ public partial class MainWindowViewModel : ObservableObject
             if (hashResultViewModel.Actual.Length == 0)
             {
                 hashResultViewModel.Actual = Localized.ResultActualNA;
-                hashResultViewModel.Status = Localized.ResultCancel;
+                hashResultViewModel.Status = Localized.ResultMiss;
             }
         }
     }
